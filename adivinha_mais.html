@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8"> <!-- Define a codificação de caracteres para UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajusta a visualização para dispositivos móveis -->
+    <title>Adivinha mais</title>
+    <style>
+        body {
+            background-color: pink; /* Define cor de fundo da página */
+        }
+
+        button {
+            color: rgb(30, 23, 30); /* Cor do texto do botão */
+            background-color: rgb(231, 176, 185); /* Cor de fundo do botão */
+        }
+
+        input {
+            background-color: rgb(249, 121, 143); /* Cor de fundo da caixa de texto */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>COMPARE MEU SEGREDO</h1>
+    <input> <!-- Campo onde o usuário vai digitar o número -->
+    <button>Compare com o meu segredo</button> <!-- Botão para verificar -->
+
+    <script>
+        // Função que sorteia um número aleatório entre 0 e 10
+        function sorteia() {
+            return Math.round(Math.random() * 10);
+        }
+
+        // Função que sorteia vários números diferentes
+        function sorteiaNumeros(quantidade) {
+
+            let segredos = []; // Vetor que vai guardar os números secretos
+
+            let numero = 1; // Contador de quantos números já foram sorteados
+
+            // Continua até sortear a quantidade desejada
+            while (numero <= quantidade) {
+
+                let numeroAleatorio = sorteia(); // Sorteia um número novo
+
+                let achou = false; // Flag para saber se o número já foi sorteado
+
+                // Verifica se o número já existe no vetor segredos
+                for (let posicao = 0; posicao < segredos.length; posicao++) {
+
+                    if (segredos[posicao] == numeroAleatorio) {
+                        achou = true; // Marca como encontrado
+                        break; // Sai do laço para não repetir
+                    }
+                }
+
+                // Se o número não foi achado, adiciona ao vetor
+                if (achou == false) {
+                    segredos.push(numeroAleatorio); // Guarda o número sorteado
+                    numero++; // Conta mais um número válido
+                }
+
+            }
+            return segredos; // Retorna o vetor de números sorteados
+        }
+        
+        // Sorteia 3 números secretos e guarda em um vetor
+        let segredos = sorteiaNumeros(3);
+        console.log(segredos); // Mostra no console (para testes)
+
+        // Seleciona o campo de input e prepara ele
+        let input = document.querySelector("input"); 
+        input.value = ""; // Limpa o campo de texto
+        input.focus(); // Coloca o cursor no campo para digitar
+
+        // Função que verifica se o número digitado está nos segredos
+        function verifica() {
+            let achou = false; // Flag para saber se acertou
+
+            // Percorre o vetor de segredos
+            for (let posicao = 0; posicao < segredos.length; posicao++) {
+                if (input.value == segredos[posicao]) { // Se acertou
+                    alert("Você ACERTOUU!!!"); 
+                    achou = true; 
+                    break; // Sai do laço porque já achou
+                }
+            }
+
+            // Se não achou nenhum igual, mostra erro
+            if (achou == false) {
+                alert("Você ERROU!!");
+            }
+
+            // Limpa e foca novamente no input
+            input.value = "";
+            input.focus();
+        }
+
+        // Seleciona o botão
+        let button = document.querySelector("button");
+
+        // Quando o botão for clicado, executa a função verifica()
+        button.onclick = verifica;
+
+    </script>
+
+</body>
+
+</html>
